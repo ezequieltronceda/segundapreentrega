@@ -17,8 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const img = document.createElement("img");
       img.src = producto.imagen;
       img.alt = producto.nombre;
-      img.style.maxWidth = "50px";
-      img.style.borderRadius = "5px";
       li.appendChild(img);
 
       const nombre = document.createElement("span");
