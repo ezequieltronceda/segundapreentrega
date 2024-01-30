@@ -1,0 +1,25 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  gap: 15%;
+  background-color: $color-header;
+  color: white;
+  z-index: 2;
+
+  img {
+    height: 50%;
+    background-color: white;
+    border-radius: 15px;
+    transition: transform 100ms ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

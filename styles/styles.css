@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  gap: 15%;
+  background-color: #263752;
+  color: white;
+  z-index: 2;
+}
+header img {
+  height: 50%;
+  background-color: white;
+  border-radius: 15px;
+  transition: transform 100ms ease-in-out;
+  cursor: pointer;
+}
+header img:hover {
+  transform: scale(1.1);
+}
+
+main {
+  margin: auto;
+  padding: auto;
+}
+
+body {
+  background-color: #141c29;
+  padding-top: 90px;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px;
+  margin-bottom: 20px;
+}
+section article {
+  background-color: #2d4263;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 20px;
+  transition: transform 200ms ease-in-out;
+}
+section article:hover {
+  transform: scale(1.05);
+  background-color: #11294d;
+}
+section article img {
+  width: 320px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 20px 20px 0px 0px;
+}
+section article .info {
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+section article .info p:first-child {
+  font-size: 25px;
+  font-weight: 300;
+}
+section article .info .precio {
+  font-size: 20px;
+  font-weight: 500;
+}
+section article .info button {
+  background-color: #263143;
+  width: 100px;
+  height: 35px;
+  border-radius: 10px;
+  border: none;
+  font-size: 17px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: transform 300ms ease-in-out;
+}
+section article .info button:hover {
+  transform: scale(1.2);
+  background-color: #2d4263;
+}
+
+/*# sourceMappingURL=styles.css.map */
