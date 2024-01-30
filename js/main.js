@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let productos = obtenerProductosLocalStorage() || [];
   let carritoProductos = obtenerCarritoLocalStorage() || [];
+  let idContador = productos.length;
 
   function actualizarCarrito() {
     listaCarrito.innerHTML = "";
@@ -51,8 +52,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function agregarProducto(nombre, precio, imagen) {
+    // Verifica si el precio es un número
+    if (isNaN(precio)) {
+      console.error("El precio no es un número válido.");
+      return;
+    }
+
+    // Incrementa el contador global para generar un ID único
+    idContador++;
+
     const producto = {
-      id: productos.length + 1,
+      id: idContador,
       nombre,
       precio,
       imagen,
@@ -76,8 +86,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function obtenerCarritoLocalStorage() {
-    const carritoGuardado = localStorage.getItem("carrito");
-    return carritoGuardado ? JSON.parse(carritoGuardado) : null;
+    try {
+      const carritoGuardado = localStorage.getItem("carrito");
+      return carritoGuardado ? JSON.parse(carritoGuardado) : [];
+    } catch (error) {
+      console.error(
+        "Error al obtener el carrito desde el almacenamiento local:",
+        error
+      );
+      return [];
+    }
   }
 
   function guardarProductosLocalStorage() {
@@ -85,8 +103,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function obtenerProductosLocalStorage() {
-    const productosGuardados = localStorage.getItem("productos");
-    return productosGuardados ? JSON.parse(productosGuardados) : null;
+    try {
+      const productosGuardados = localStorage.getItem("productos");
+      return productosGuardados ? JSON.parse(productosGuardados) : [];
+    } catch (error) {
+      console.error(
+        "Error al obtener los productos desde el almacenamiento local:",
+        error
+      );
+      return [];
+    }
   }
 
   function actualizarCantidadCarrito() {
