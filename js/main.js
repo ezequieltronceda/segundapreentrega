@@ -52,13 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function agregarProducto(nombre, precio, imagen) {
-    // Verifica si el precio es un número
     if (isNaN(precio)) {
       console.error("El precio no es un número válido.");
       return;
     }
 
-    // Incrementa el contador global para generar un ID único
     idContador++;
 
     const producto = {
@@ -119,11 +117,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const cantidad = carritoProductos.length;
     carritoCantidad.textContent = cantidad;
 
-    // Mostrar u ocultar el número según si hay elementos en el carrito
     carritoCantidad.style.display = cantidad > 0 ? "inline-block" : "none";
   }
 
-  // Carga los productos del carrito al cargar la página
   actualizarCarrito();
 
   carritoIcon.addEventListener("click", () => {
