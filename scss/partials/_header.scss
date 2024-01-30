@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #141c29;
+  padding-top: 90px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #263752;
+  color: white;
+  z-index: 2;
+
+  .titulo {
+    margin-left: 20px;
+  }
+
+  .carrito-container {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    position: relative;
+
+    img {
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 100ms ease-in-out;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    &:hover .carrito {
+      display: block;
+    }
+
+    &.visible .carrito {
+      display: block;
+    }
+
+    .carrito {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      min-width: 400px;
+      max-height: 300px;
+      overflow-y: auto;
+      background-color: white;
+      color: black;
+      border: 1px solid #263752;
+      border-radius: 10px;
+      padding: 10px;
+      z-index: 3;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        max-height: 200px;
+        overflow-y: auto;
+
+        li {
+          margin-bottom: 10px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          img {
+            max-width: 50px;
+            border-radius: 5px;
+            margin-right: 10px;
+          }
+
+          button {
+            background-color: #263143;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px;
+            margin-right: 5px;
+            cursor: pointer;
+            transition: transform 300ms ease-in-out;
+            &:hover {
+              transform: scale(1.05);
+              color: black;
+              border: red solid 1px;
+              background-color: white;
+            }
+            &:focus {
+              transform: scale(0.5);
+            }
+          }
+        }
+      }
+
+      p {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+    }
+
+    #cantidad-carrito {
+      position: absolute;
+      bottom: -8px;
+      right: -8px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      padding: 4px 8px;
+      font-size: 12px;
+      display: none;
+    }
+  }
+}
