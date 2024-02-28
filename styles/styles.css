@@ -118,6 +118,9 @@ header .carrito-container #cantidad-carrito {
   font-size: 12px;
   display: none;
 }
+header .carrito-container #cantidad-carrito.visible {
+  display: inline-block;
+}
 
 main {
   margin: auto;

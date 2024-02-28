@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tienda online</title>
+    <link rel="stylesheet" href="sweetalert2.min.css" />
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
@@ -13,17 +14,30 @@
         <img
           src="./images/3144456.png"
           alt="imagen de un carrito de compras"
+          class="carritoimg"
           id="carrito-icon"
         />
-        <span id="cantidad-carrito" class="cantidad-carrito">0</span>
-        <div class="carrito" id="carrito">
+        <span id="cantidad-carrito" class="cantidad-carrito"></span>
+        <div class="carrito" id="carrito-container">
           <ul id="lista-carrito"></ul>
           <p>Total: <span id="total">$0.00</span></p>
+          <button id="comprar-btn">Comprar</button>
         </div>
       </div>
     </header>
-    <section id="productos-container"></section>
-    <footer></footer>
+
+    <main>
+      <section id="contenedor-productos" class="container"></section>
+    </main>
+
+    <div id="overlay">
+      <div id="formulario">
+        <form id="formulario-compra">
+          <!-- Contenido del formulario -->
+        </form>
+      </div>
+    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="./js/main.js"></script>
   </body>
 </html>

@@ -123,5 +123,8 @@ header {
       font-size: 12px;
       display: none;
     }
+    #cantidad-carrito.visible {
+      display: inline-block;
+    }
   }
 }
