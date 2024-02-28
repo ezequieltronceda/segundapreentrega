@@ -6,8 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const totalElement = document.getElementById("total");
   const comprarBtn = document.getElementById("comprar-btn");
   const overlay = document.getElementById("overlay");
+  const carritoProductosElement = document.getElementById("carrito-container");
 
-  let carritoProductos = [];
+  let carritoProductos = obtenerCarritoLocalStorage() || [];
   let formularioMostrado = false; // Variable para controlar si el formulario ya está mostrado
 
   fetch("productos.json")
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((data) => {
       productos = data;
       mostrarProductos();
+      actualizarCarrito(); // Actualizar el carrito al cargar los productos
     })
     .catch((error) => console.error("Error al cargar los productos:", error));
 
@@ -43,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     listaCarrito.innerHTML = "";
     totalElement.textContent = `$${calcularTotal().toFixed(2)}`;
     mostrarCantidadCarrito();
+    guardarCarritoLocalStorage(); // Guardar el estado del carrito en localStorage
 
     carritoProductos.forEach((producto) => {
       const li = document.createElement("li");
@@ -65,7 +68,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function eliminarProductoDelCarrito(producto) {
-    carritoProductos = carritoProductos.filter((item) => item !== producto);
+    const index = carritoProductos.findIndex((p) => p === producto);
+    if (index !== -1) {
+      carritoProductos.splice(index, 1); // Eliminar solo el elemento actual
+    }
     actualizarCarrito();
   }
 
@@ -89,7 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   comprarBtn.addEventListener("click", () => {
-    if (!formularioMostrado) {
+    if (!formularioMostrado && carritoProductos.length > 0) {
+      // Verificar si el carrito tiene elementos
       mostrarFormularioCompra();
     }
   });
@@ -117,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <option value="tarjeta">Tarjeta</option>
       </select>
       <button type="submit">Confirmar</button>
+      <button type="button" id="cancelar-btn">Cancelar</button>
     `;
     comprarBtn.after(formulario);
     formularioMostrado = true;
@@ -126,7 +134,23 @@ document.addEventListener("DOMContentLoaded", function () {
       swal("Compra Confirmada", "Gracias por tu compra", "success").then(() => {
         formulario.remove();
         formularioMostrado = false;
+        carritoProductos = []; // Vaciar el carrito al confirmar la compra
+        actualizarCarrito();
       });
     });
+
+    const cancelarBtn = formulario.querySelector("#cancelar-btn");
+    cancelarBtn.addEventListener("click", () => {
+      formulario.remove();
+      formularioMostrado = false;
+    });
+  }
+
+  function guardarCarritoLocalStorage() {
+    localStorage.setItem("carritoProductos", JSON.stringify(carritoProductos));
+  }
+
+  function obtenerCarritoLocalStorage() {
+    return JSON.parse(localStorage.getItem("carritoProductos"));
   }
 });
