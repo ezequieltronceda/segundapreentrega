@@ -1,17 +1,190 @@
-/* Error: Can't find stylesheet to import.
- *   ,
- * 7 | @import "./partials/carrito";
- *   |         ^^^^^^^^^^^^^^^^^^^^
- *   '
- *   scss\s.scss 7:9  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a   \2577 \a 7 \2502  @import \"./partials/carrito\";\d\a   \2502          ^^^^^^^^^^^^^^^^^^^^\a   \2575 \a   scss\\s.scss 7:9  root stylesheet";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #141c29;
+  padding-top: 90px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #263752;
+  color: white;
+  z-index: 2;
+}
+header .titulo {
+  margin-left: 20px;
+}
+header .carrito-container {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  position: relative;
+}
+header .carrito-container img {
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 100ms ease-in-out;
+}
+header .carrito-container img:hover {
+  transform: scale(1.1);
+}
+header .carrito-container:hover .carrito {
+  display: block;
+}
+header .carrito-container.visible .carrito {
+  display: block;
+}
+header .carrito-container .carrito {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 400px;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: white;
+  color: black;
+  border: 1px solid #263752;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 3;
+}
+header .carrito-container .carrito ul {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+header .carrito-container .carrito ul li {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .carrito-container .carrito ul li img {
+  max-width: 50px;
+  border-radius: 5px;
+  margin-right: 10px;
+  border: solid 1px black;
+}
+header .carrito-container .carrito ul li button {
+  background-color: #263143;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: transform 300ms ease-in-out;
+}
+header .carrito-container .carrito ul li button:hover {
+  transform: scale(1.05);
+  color: black;
+  border: red solid 1px;
+  background-color: white;
+}
+header .carrito-container .carrito ul li button:focus {
+  transform: scale(0.5);
+}
+header .carrito-container .carrito p {
+  font-weight: bold;
+  margin-top: 10px;
+}
+header .carrito-container #cantidad-carrito {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 12px;
+  display: none;
+}
+header .carrito-container #cantidad-carrito.visible {
+  display: inline-block;
+}
+
+main {
+  margin: auto;
+  padding: auto;
+}
+
+body {
+  background-color: #141c29;
+  padding-top: 90px;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 50px;
+  margin-bottom: 20px;
+}
+section article {
+  background-color: #2d4263;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 20px;
+  transition: transform 200ms ease-in-out;
+}
+section article:hover {
+  transform: scale(1.05);
+  background-color: #11294d;
+}
+section article img {
+  width: 320px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 20px 20px 0px 0px;
+}
+section article .info {
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+}
+section article .info p:first-child {
+  font-size: 25px;
+  font-weight: 300;
+}
+section article .info .precio {
+  font-size: 20px;
+  font-weight: 500;
+}
+section article .info button {
+  background-color: #263143;
+  width: 100px;
+  height: 35px;
+  border-radius: 10px;
+  border: none;
+  font-size: 17px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: transform 300ms ease-in-out;
+}
+section article .info button:hover {
+  transform: scale(1.2);
+  background-color: #2d4263;
+}
+
+/*# sourceMappingURL=styles.css.map */

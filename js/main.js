@@ -4,44 +4,75 @@ document.addEventListener("DOMContentLoaded", function () {
   const carritoContainer = document.querySelector(".carrito-container");
   const listaCarrito = document.getElementById("lista-carrito");
   const totalElement = document.getElementById("total");
+  const comprarBtn = document.getElementById("comprar-btn");
+  const overlay = document.getElementById("overlay");
+  const carritoProductosElement = document.getElementById("carrito-container");
 
-  let productos = obtenerProductosLocalStorage() || [];
   let carritoProductos = obtenerCarritoLocalStorage() || [];
-  let idContador = productos.length;
+  let formularioMostrado = false; // Variable para controlar si el formulario ya está mostrado
+
+  fetch("productos.json")
+    .then((response) => response.json())
+    .then((data) => {
+      productos = data;
+      mostrarProductos();
+      actualizarCarrito(); // Actualizar el carrito al cargar los productos
+    })
+    .catch((error) => console.error("Error al cargar los productos:", error));
+
+  function mostrarProductos() {
+    const productosContainer = document.getElementById("contenedor-productos");
+    productos.forEach((producto) => {
+      const article = document.createElement("article");
+      article.classList.add("producto");
+      article.innerHTML = `
+            <img src="${producto.imagen}" alt="${producto.nombre}">
+            <div class="info">
+                <p>${producto.nombre}</p>
+                <p class="precio">$${producto.precio.toFixed(2)}</p>
+                <button class="comprar-btn">Comprar</button>
+            </div>
+        `;
+      const comprarBtn = article.querySelector(".comprar-btn");
+      comprarBtn.addEventListener("click", () => {
+        agregarProductoAlCarrito(producto);
+      });
+      productosContainer.appendChild(article);
+    });
+  }
 
   function actualizarCarrito() {
     listaCarrito.innerHTML = "";
+    totalElement.textContent = `$${calcularTotal().toFixed(2)}`;
+    mostrarCantidadCarrito();
+    guardarCarritoLocalStorage(); // Guardar el estado del carrito en localStorage
 
     carritoProductos.forEach((producto) => {
       const li = document.createElement("li");
-
-      const img = document.createElement("img");
-      img.src = producto.imagen;
-      img.alt = producto.nombre;
-      li.appendChild(img);
-
-      const nombre = document.createElement("span");
-      nombre.textContent = producto.nombre;
-
-      const precio = document.createElement("span");
-      precio.textContent = `$${producto.precio.toFixed(2)}`;
-
-      const btnEliminar = document.createElement("button");
-      btnEliminar.textContent = "Eliminar";
-      btnEliminar.addEventListener("click", () =>
-        eliminarProducto(producto.id)
-      );
-
-      li.appendChild(nombre);
-      li.appendChild(precio);
-      li.appendChild(btnEliminar);
-
+      li.innerHTML = `
+            <img src="${producto.imagen}" alt="${producto.nombre}">
+            <span>${producto.nombre}</span>
+            <span>$${producto.precio.toFixed(2)}</span>
+            <button class="eliminar-btn">Eliminar</button>
+        `;
+      li.querySelector(".eliminar-btn").addEventListener("click", () => {
+        eliminarProductoDelCarrito(producto);
+      });
       listaCarrito.appendChild(li);
     });
+  }
 
-    totalElement.textContent = `$${calcularTotal().toFixed(2)}`;
-    guardarCarritoLocalStorage();
-    actualizarCantidadCarrito();
+  function agregarProductoAlCarrito(producto) {
+    carritoProductos.push(producto);
+    actualizarCarrito();
+  }
+
+  function eliminarProductoDelCarrito(producto) {
+    const index = carritoProductos.findIndex((p) => p === producto);
+    if (index !== -1) {
+      carritoProductos.splice(index, 1); // Eliminar solo el elemento actual
+    }
+    actualizarCarrito();
   }
 
   function calcularTotal() {
@@ -51,90 +82,75 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
-  function agregarProducto(nombre, precio, imagen) {
-    if (isNaN(precio)) {
-      console.error("El precio no es un número válido.");
-      return;
+  carritoIcon.addEventListener("click", () => {
+    if (!formularioMostrado) {
+      carritoContainer.classList.toggle("visible");
     }
+  });
 
-    idContador++;
+  carritoContainer.addEventListener("mouseleave", () => {
+    if (!formularioMostrado) {
+      carritoContainer.classList.remove("visible");
+    }
+  });
 
-    const producto = {
-      id: idContador,
-      nombre,
-      precio,
-      imagen,
-    };
+  comprarBtn.addEventListener("click", () => {
+    if (!formularioMostrado && carritoProductos.length > 0) {
+      // Verificar si el carrito tiene elementos
+      mostrarFormularioCompra();
+    }
+  });
 
-    productos.push(producto);
-    carritoProductos.push(producto);
-    actualizarCarrito();
-    guardarProductosLocalStorage();
+  function mostrarCantidadCarrito() {
+    carritoCantidad.textContent = carritoProductos.length;
+    if (carritoProductos.length > 0) {
+      carritoCantidad.classList.add("visible");
+    } else {
+      carritoCantidad.classList.remove("visible");
+    }
   }
 
-  function eliminarProducto(id) {
-    carritoProductos = carritoProductos.filter(
-      (producto) => producto.id !== id
-    );
-    actualizarCarrito();
+  function mostrarFormularioCompra() {
+    const formulario = document.createElement("form");
+    formulario.id = "formulario-compra";
+    formulario.innerHTML = `
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" required />
+      <label for="apellido">Apellido:</label>
+      <input type="text" id="apellido" required />
+      <label for="forma-pago">Forma de Pago:</label>
+      <select id="forma-pago" required>
+        <option value="efectivo">Efectivo</option>
+        <option value="tarjeta">Tarjeta</option>
+      </select>
+      <button type="submit">Confirmar</button>
+      <button type="button" id="cancelar-btn">Cancelar</button>
+    `;
+    comprarBtn.after(formulario);
+    formularioMostrado = true;
+
+    formulario.addEventListener("submit", (event) => {
+      event.preventDefault();
+      swal("Compra Confirmada", "Gracias por tu compra", "success").then(() => {
+        formulario.remove();
+        formularioMostrado = false;
+        carritoProductos = []; // Vaciar el carrito al confirmar la compra
+        actualizarCarrito();
+      });
+    });
+
+    const cancelarBtn = formulario.querySelector("#cancelar-btn");
+    cancelarBtn.addEventListener("click", () => {
+      formulario.remove();
+      formularioMostrado = false;
+    });
   }
 
   function guardarCarritoLocalStorage() {
-    localStorage.setItem("carrito", JSON.stringify(carritoProductos));
+    localStorage.setItem("carritoProductos", JSON.stringify(carritoProductos));
   }
 
   function obtenerCarritoLocalStorage() {
-    try {
-      const carritoGuardado = localStorage.getItem("carrito");
-      return carritoGuardado ? JSON.parse(carritoGuardado) : [];
-    } catch (error) {
-      console.error(
-        "Error al obtener el carrito desde el almacenamiento local:",
-        error
-      );
-      return [];
-    }
+    return JSON.parse(localStorage.getItem("carritoProductos"));
   }
-
-  function guardarProductosLocalStorage() {
-    localStorage.setItem("productos", JSON.stringify(productos));
-  }
-
-  function obtenerProductosLocalStorage() {
-    try {
-      const productosGuardados = localStorage.getItem("productos");
-      return productosGuardados ? JSON.parse(productosGuardados) : [];
-    } catch (error) {
-      console.error(
-        "Error al obtener los productos desde el almacenamiento local:",
-        error
-      );
-      return [];
-    }
-  }
-
-  function actualizarCantidadCarrito() {
-    const cantidad = carritoProductos.length;
-    carritoCantidad.textContent = cantidad;
-
-    carritoCantidad.style.display = cantidad > 0 ? "inline-block" : "none";
-  }
-
-  actualizarCarrito();
-
-  carritoIcon.addEventListener("click", () => {
-    carritoContainer.classList.toggle("visible");
-  });
-
-  const botonesComprar = document.querySelectorAll(".comprar-btn");
-  botonesComprar.forEach((boton) => {
-    boton.addEventListener("click", (event) => {
-      const productoSeleccionado = event.target.closest(".producto");
-      const nombre = productoSeleccionado.dataset.nombre;
-      const precio = parseFloat(productoSeleccionado.dataset.precio);
-      const imagen = productoSeleccionado.querySelector("img").src;
-
-      agregarProducto(nombre, precio, imagen);
-    });
-  });
 });

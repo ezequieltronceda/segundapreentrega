@@ -1,0 +1,33 @@
+[
+    {
+      "nombre": "Crema hidratante cacao",
+      "precio": 9000.00,
+      "imagen": "./images/crh1.jpg"
+    },
+    {
+      "nombre": "Crema hidratante castor",
+      "precio": 10000.00,
+      "imagen": "./images/crh2.jpg"
+    },
+    {
+      "nombre": "Crema hidratante lavanda",
+      "precio": 11000.00,
+      "imagen": "./images/crh3.jpg"
+    },
+    {
+      "nombre": "Crema exfoliante",
+      "precio": 15000.00,
+      "imagen": "./images/cre.jpg"
+    },
+    {
+      "nombre": "Crema exfoliante pecan",
+      "precio": 20000.00,
+      "imagen": "./images/cre2r.jpg"
+    },
+    {
+      "nombre": "Serum",
+      "precio": 25000.00,
+      "imagen": "./images/ser.jpg"
+    }
+  ]
+  
