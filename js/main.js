@@ -123,8 +123,10 @@ document.addEventListener("DOMContentLoaded", function () {
         <option value="efectivo">Efectivo</option>
         <option value="tarjeta">Tarjeta</option>
       </select>
-      <button type="submit">Confirmar</button>
-      <button type="button" id="cancelar-btn">Cancelar</button>
+      <br>
+      <button type="button" id="cancelar-btn" class="btnCnl">Cancelar</button>
+      <button type="submit" class="btnCnf">Confirmar</button>
+      
     `;
     comprarBtn.after(formulario);
     formularioMostrado = true;

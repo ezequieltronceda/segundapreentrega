@@ -122,6 +122,28 @@ header .carrito-container #cantidad-carrito.visible {
   display: inline-block;
 }
 
+#comprar-btn {
+  background-color: #263143;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: transform 300ms ease-in-out;
+  position: relative;
+  left: 312px;
+}
+#comprar-btn:hover {
+  transform: scale(1.05);
+  color: black;
+  border: green solid 1px;
+  background-color: white;
+}
+#comprar-btn:focus {
+  transform: scale(0);
+}
+
 main {
   margin: auto;
   padding: auto;
@@ -185,6 +207,47 @@ section article .info button {
 section article .info button:hover {
   transform: scale(1.2);
   background-color: #2d4263;
+}
+
+#formulario-compra {
+  display: flex;
+  border: 1px black solid;
+  margin-top: 20px;
+  padding: 5%;
+  flex-direction: column;
+}
+
+.btnCnf {
+  margin-top: 5px;
+  transition: transform 300ms ease-in-out;
+}
+.btnCnf:hover {
+  transform: scale(1.05);
+  background-color: green;
+  border: 1px white solid;
+  color: whitesmoke;
+}
+.btnCnf:focus {
+  transform: scale(0);
+  background-color: green;
+  color: white;
+  border: 1px white solid;
+}
+
+.btnCnl {
+  transition: transform 300ms ease-in-out;
+}
+.btnCnl:hover {
+  transform: scale(1.05);
+  background-color: red;
+  color: white;
+  border: 1px white solid;
+}
+.btnCnl:focus {
+  transform: scale(0);
+  background-color: red;
+  color: white;
+  border: 1px white solid;
 }
 
 /*# sourceMappingURL=styles.css.map */

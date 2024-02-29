@@ -128,3 +128,24 @@ header {
     }
   }
 }
+#comprar-btn {
+  background-color: #263143;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: transform 300ms ease-in-out;
+  position: relative;
+  left: 312px;
+  &:hover {
+    transform: scale(1.05);
+    color: black;
+    border: green solid 1px;
+    background-color: white;
+  }
+  &:focus {
+    transform: scale(0);
+  }
+}
